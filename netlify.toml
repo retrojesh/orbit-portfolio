@@ -1,0 +1,24 @@
+# Sito statico: nessuna build, si pubblica la cartella cosi' com'e'.
+[build]
+  publish = "."
+  command = ""
+
+# I nomi dei file non contengono un hash, quindi non si puo' cachare per
+# sempre: se ricodifichi un video il nome resta arrival.mp4 e il browser
+# continuerebbe a servire il vecchio. Un anno di cache ma con revalidate:
+# il browser chiede se e' cambiato, e se no non riscarica gli 8 MB.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, must-revalidate"
+
+# La pagina invece deve essere sempre fresca, pesa 15 KB.
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/scrub-engine.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
