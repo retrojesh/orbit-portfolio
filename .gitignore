@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+
+# Cache di render di Higgsfield: clip intermedie e frame di raccordo fra le leg.
+# Le rigenera scripts/render.sh e pesano parecchio. I master 720p che servono
+# davvero stanno in assets/vid/orig/ e quelli SONO versionati.
+work/
+
+# File temporanei di anteprima
+_shot.html

@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Alessio Jeshili — Software su misura e automazione</title>
+  <meta name="description" content="Alessio Jeshili — sviluppo software su misura, siti web e integrazioni AI." />
+  <style>
+    /* Neon-night / deep-space theme. --sw-bg matches the void the scenes float in. */
+    :root, .sw-root {
+      --sw-bg: #0A0E1A;          /* void black == the scene background */
+      --sw-ink: #EAF2FF;         /* star white — primary text/headings */
+      --sw-ink-soft: #8A93B2;    /* dimmed starlight — secondary text */
+      --sw-accent: #21E6C1;      /* plasma cyan — per-section accents override at runtime */
+      --sw-font-display: 'Space Grotesk', 'Helvetica Neue', system-ui, sans-serif;
+      --sw-font-body: system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+    }
+    html, body { background: #0A0E1A; }
+
+    /* The engine's default chrome assumes a light page: white glass pills with
+       dark text. On this void-black theme that inverts into white-on-white — the
+       top CTA and the route labels were unreadable. These rules are unlayered, so
+       they beat the engine's @layer sw defaults whatever the injection order.
+       Text stays --sw-ink on every chip: the accent shifts per section (cyan →
+       amber → violet → magenta) and no single foreground survives all four, so
+       the accent carries border and glow instead of the fill. */
+
+    /* Centre nav: dark glass instead of white glass. */
+    .sw-nav {
+      background: color-mix(in srgb, var(--sw-bg) 76%, transparent);
+      border-color: color-mix(in srgb, var(--sw-accent) 28%, transparent);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .5);
+    }
+    .sw-nav__item { color: #A7B0CC; }
+    .sw-nav__item:hover {
+      color: var(--sw-ink);
+      background: color-mix(in srgb, var(--sw-accent) 14%, transparent);
+    }
+    .sw-nav__item.is-active {
+      color: var(--sw-ink);
+      background: color-mix(in srgb, var(--sw-accent) 24%, transparent);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sw-accent) 55%, transparent),
+                  0 0 18px color-mix(in srgb, var(--sw-accent) 28%, transparent);
+    }
+
+    /* Top-right CTA + the closing primary button: was #fff on #EAF2FF. Invert it
+       — light fill, void-black text — so it reads as the primary action. */
+    .sw-topcta, .sw-btn--primary {
+      color: var(--sw-bg);
+      background: var(--sw-ink);
+      box-shadow: 0 0 22px color-mix(in srgb, var(--sw-accent) 32%, transparent);
+    }
+    .sw-topcta:hover, .sw-btn--primary:hover {
+      background: #fff;
+      box-shadow: 0 0 28px color-mix(in srgb, var(--sw-accent) 48%, transparent);
+    }
+
+    /* Route labels (right rail): was --sw-ink on a near-white pill. */
+    .sw-route__label {
+      color: var(--sw-ink);
+      background: color-mix(in srgb, var(--sw-bg) 82%, transparent);
+      border-color: color-mix(in srgb, var(--sw-accent) 40%, transparent);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, .5);
+    }
+
+    /* Contact links in the closing section. pointer-events must be re-enabled:
+       the engine sets it on .sw-copy only while that section is on screen, and
+       these sit outside the .sw-copy__cta block that opts in by default. */
+    .aj-social {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 22px 0 0;
+      padding: 0;
+      pointer-events: auto;
+    }
+    .aj-social a {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 18px 10px 15px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: .88rem;
+      font-weight: 600;
+      color: var(--sw-ink);
+      background: color-mix(in srgb, var(--sw-accent) 12%, var(--sw-bg));
+      border: 1px solid color-mix(in srgb, var(--sw-accent) 38%, transparent);
+      transition: transform .2s, background .2s, border-color .2s, box-shadow .2s;
+    }
+    .aj-social svg {
+      width: 18px;
+      height: 18px;
+      flex: none;
+      color: color-mix(in srgb, var(--sw-accent) 65%, var(--sw-ink));
+      transition: color .2s;
+    }
+    .aj-social a:hover {
+      transform: translateY(-2px);
+      background: color-mix(in srgb, var(--sw-accent) 22%, var(--sw-bg));
+      border-color: color-mix(in srgb, var(--sw-accent) 70%, transparent);
+      box-shadow: 0 0 20px color-mix(in srgb, var(--sw-accent) 30%, transparent);
+    }
+    .aj-social a:hover svg { color: var(--sw-ink); }
+    .aj-social a:focus-visible {
+      outline: 2px solid var(--sw-accent);
+      outline-offset: 3px;
+    }
+
+    /* Tag chips: readable already, but white chips fight the neon-space palette.
+       Accent is lightened toward the ink so violet clears 4.5:1 like the rest. */
+    .sw-copy__tags li {
+      color: color-mix(in srgb, var(--sw-accent) 60%, var(--sw-ink));
+      background: color-mix(in srgb, var(--sw-accent) 16%, var(--sw-bg));
+      border-color: color-mix(in srgb, var(--sw-accent) 42%, transparent);
+    }
+  </style>
+</head>
+<body>
+  <div id="top"></div>
+  <div id="world"></div>
+
+  <script src="scrub-engine.js"></script>
+  <script>
+    // ⚠️ COMPLETA QUESTI DUE LINK con i tuoi profili — sono segnaposto.
+    const CONTATTI = {
+      email:    'alessiojeshili@gmail.com',
+      linkedin: 'https://www.linkedin.com/in/TUO-PROFILO',
+      github:   'https://github.com/TUO-USERNAME',
+    };
+
+    mountScrollWorld(document.getElementById('world'), {
+      brand: { name: 'Alessio Jeshili', href: '#top' },
+      cta: { label: 'Scrivimi', href: 'mailto:' + CONTATTI.email },
+      hint: 'scorri',
+      // Architecture A (continuous forward take): legs chain directly, no connectors.
+      // A small crossfade smooths the frame-matched seams between legs.
+      diveScroll: 1.4,
+      crossfade: 0.08,
+      atmosphere: true,
+      sections: [
+        {
+          id: 'arrival', label: 'Intro',
+          still: 'assets/arrival.png',
+          clip: 'assets/vid/arrival.mp4',
+          accent: '#21E6C1',
+          scroll: 1.6, linger: 0.4,
+          title: 'Sviluppo software.',
+          body: 'Applicazioni su misura, siti web e integrazioni AI.',
+          tags: ['Software su misura', 'Siti web', 'AI'],
+        },
+        {
+          id: 'custom', label: 'Su misura',
+          still: 'assets/custom.png',
+          clip: 'assets/vid/custom.mp4',
+          accent: '#FFB627',
+          scroll: 1.4, linger: 0.35,
+          title: 'Software su misura.',
+          body: 'Gestionali, automazioni e strumenti interni.',
+          tags: ['Full-stack', 'Automazioni', 'Integrazioni'],
+        },
+        {
+          id: 'web', label: 'Siti web',
+          still: 'assets/web.png',
+          clip: 'assets/vid/web.mp4',
+          accent: '#7B2FF7',
+          scroll: 1.4, linger: 0.35,
+          title: 'Siti web.',
+          body: 'Siti vetrina e landing page, veloci anche da telefono.',
+          tags: ['Siti vetrina', 'Landing page', 'Mobile'],
+        },
+        {
+          id: 'ai', label: 'AI',
+          still: 'assets/ai.png',
+          clip: 'assets/vid/ai.mp4',
+          accent: '#FF2E97',
+          scroll: 1.5, linger: 0.4,
+          title: 'Integrazioni AI.',
+          body: 'Automazioni con AI dentro i sistemi che usi già.',
+          tags: ['Agenti', 'Automazioni', 'API'],
+        },
+        {
+          id: 'deck', label: 'Contatti',
+          still: 'assets/deck.png',
+          clip: 'assets/vid/deck.mp4',
+          accent: '#21E6C1',
+          scroll: 1.8, linger: 0.5,
+          title: 'Contatti.',
+          body: 'Scrivimi e ti rispondo.',
+          tags: [],
+          cta: { primary: { label: 'Scrivimi', href: 'mailto:' + CONTATTI.email } },
+        },
+      ],
+      // Architecture A: no connector clips. The legs are the whole journey.
+      connectors: [],
+    });
+
+    // Contact links for the closing section. The engine escapes all config text,
+    // so icon markup can't go through `sections[]` — it's appended after mount
+    // instead (mountScrollWorld is synchronous, so the copy blocks already exist).
+    // Logos are inline SVG: the page has no external requests to make.
+    (function addContactLinks() {
+      const ICONS = {
+        linkedin: '<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>',
+        github:   '<path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23a11.5 11.5 0 0 1 3-.405c1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>',
+        gmail:    '<path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>',
+      };
+      const links = [
+        { key: 'linkedin', label: 'LinkedIn', href: CONTATTI.linkedin, ext: true },
+        { key: 'github',   label: 'GitHub',   href: CONTATTI.github,   ext: true },
+        { key: 'gmail',    label: 'Email',    href: 'mailto:' + CONTATTI.email, ext: false },
+      ];
+
+      if (/TUO-PROFILO|TUO-USERNAME/.test(CONTATTI.linkedin + CONTATTI.github)) {
+        console.warn('[contatti] LinkedIn/GitHub sono ancora segnaposto — aggiornali in CONTATTI, in cima allo script.');
+      }
+
+      const copies = document.querySelectorAll('#world .sw-copy');
+      const last = copies[copies.length - 1];
+      if (!last) return;
+
+      const ul = document.createElement('ul');
+      ul.className = 'aj-social';
+      ul.innerHTML = links.map(l =>
+        `<li><a href="${l.href}"${l.ext ? ' target="_blank" rel="noopener noreferrer"' : ''} aria-label="${l.label}">` +
+        `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">${ICONS[l.key]}</svg>` +
+        `<span>${l.label}</span></a></li>`
+      ).join('');
+      last.appendChild(ul);
+    })();
+  </script>
+</body>
+</html>
