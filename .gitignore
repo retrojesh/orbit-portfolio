@@ -1,1 +1,8 @@
 .DS_Store
+
+# I master grezzi usciti da Higgsfield. Non stanno nella repo: le clip in
+# assets/vid/ sono gia' la versione buona. Se ti servono per ricodificare:
+#   git checkout 3c6a3c6 -- assets/vid/orig
+# Ignorati perche' altrimenti un `git add -A` dopo averli ripescati li
+# rimette dentro senza che te ne accorga.
+assets/vid/orig/
