@@ -123,11 +123,10 @@
 
   <script src="scrub-engine.js"></script>
   <script>
-    // ⚠️ COMPLETA QUESTI DUE LINK con i tuoi profili — sono segnaposto.
     const CONTATTI = {
       email:    'alessiojeshili@gmail.com',
-      linkedin: 'https://www.linkedin.com/in/TUO-PROFILO',
-      github:   'https://github.com/TUO-USERNAME',
+      linkedin: 'https://www.linkedin.com/in/alessio-jeshili-07751b360/',
+      github:   'https://github.com/retrojesh',
     };
 
     mountScrollWorld(document.getElementById('world'), {
@@ -211,10 +210,6 @@
         { key: 'github',   label: 'GitHub',   href: CONTATTI.github,   ext: true },
         { key: 'gmail',    label: 'Email',    href: 'mailto:' + CONTATTI.email, ext: false },
       ];
-
-      if (/TUO-PROFILO|TUO-USERNAME/.test(CONTATTI.linkedin + CONTATTI.github)) {
-        console.warn('[contatti] LinkedIn/GitHub sono ancora segnaposto — aggiornali in CONTATTI, in cima allo script.');
-      }
 
       const copies = document.querySelectorAll('#world .sw-copy');
       const last = copies[copies.length - 1];
