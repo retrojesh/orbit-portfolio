@@ -5,6 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Alessio Jeshili — Software su misura e automazione</title>
   <meta name="description" content="Alessio Jeshili — sviluppo software su misura, siti web e integrazioni AI." />
+
+  <!-- ⚠️ DOMINIO: quando compri il dominio, sostituisci https://alessiojeshili.dev
+       ovunque compaia qui sotto (canonical, og:url, og:image, JSON-LD url). -->
+  <link rel="canonical" href="https://alessiojeshili.dev/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://alessiojeshili.dev/" />
+  <meta property="og:title" content="Alessio Jeshili — Software su misura e automazione" />
+  <meta property="og:description" content="Sviluppo software su misura, siti web e integrazioni AI." />
+  <meta property="og:image" content="https://alessiojeshili.dev/assets/arrival.jpg" />
+  <meta property="og:locale" content="it_IT" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Dice a Google che questo dominio, quel LinkedIn e quel GitHub sono la stessa
+       persona: è ciò che consolida la ricerca "Alessio Jeshili" su questo sito. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Alessio Jeshili",
+    "url": "https://alessiojeshili.dev/",
+    "email": "mailto:alessiojeshili@gmail.com",
+    "jobTitle": "Sviluppatore software",
+    "description": "Sviluppo software su misura, siti web e integrazioni AI.",
+    "sameAs": [
+      "https://www.linkedin.com/in/alessio-jeshili-07751b360/",
+      "https://github.com/retrojesh"
+    ],
+    "knowsAbout": ["Software su misura", "Siti web", "Integrazioni AI", "Automazioni"]
+  }
+  </script>
   <style>
     /* Neon-night / deep-space theme. --sw-bg matches the void the scenes float in. */
     :root, .sw-root {
@@ -16,6 +46,23 @@
       --sw-font-body: system-ui, -apple-system, 'Helvetica Neue', sans-serif;
     }
     html, body { background: #0A0E1A; }
+
+    /* Il fallback statico resta visibile solo finché il JS non monta il motore
+       (e per sempre se il JS è disattivato). Vestito col tema del sito, così se
+       si vede per un istante non lampeggia bianco. */
+    #seo-fallback {
+      max-width: 44rem;
+      margin: 0 auto;
+      padding: 12vh 6vw;
+      color: #EAF2FF;
+      font-family: system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+    }
+    #seo-fallback h1 { font-size: clamp(2rem, 6vw, 3.2rem); margin: 0 0 .4em; }
+    #seo-fallback h2 { font-size: 1.25rem; margin: 2.2em 0 .3em; color: #21E6C1; }
+    #seo-fallback p  { color: #8A93B2; margin: 0; }
+    #seo-fallback ul { list-style: none; padding: 0; margin: .6em 0 0; }
+    #seo-fallback a  { color: #21E6C1; }
 
     /* The engine's default chrome assumes a light page: white glass pills with
        dark text. On this void-black theme that inverts into white-on-white — the
@@ -119,6 +166,38 @@
 </head>
 <body>
   <div id="top"></div>
+
+  <!-- Contenuto reale in HTML statico. Il motore costruisce la sua interfaccia via JS,
+       quindi senza questo blocco un crawler che non esegue JavaScript vedrebbe una
+       pagina vuota. Il testo qui è identico a quello in sections[] più sotto: quando
+       ne cambi uno, cambia anche l'altro. Lo script lo rimuove appena il motore parte,
+       perciò l'utente non lo vede mai. -->
+  <main id="seo-fallback">
+    <h1>Alessio Jeshili</h1>
+    <p>Sviluppo software su misura, siti web e integrazioni AI.</p>
+
+    <section>
+      <h2>Software su misura</h2>
+      <p>Gestionali, automazioni e strumenti interni.</p>
+    </section>
+    <section>
+      <h2>Siti web</h2>
+      <p>Siti vetrina e landing page, veloci anche da telefono.</p>
+    </section>
+    <section>
+      <h2>Integrazioni AI</h2>
+      <p>Automazioni con AI dentro i sistemi che usi già.</p>
+    </section>
+    <section>
+      <h2>Contatti</h2>
+      <ul>
+        <li><a href="mailto:alessiojeshili@gmail.com">alessiojeshili@gmail.com</a></li>
+        <li><a href="https://www.linkedin.com/in/alessio-jeshili-07751b360/">LinkedIn</a></li>
+        <li><a href="https://github.com/retrojesh">GitHub</a></li>
+      </ul>
+    </section>
+  </main>
+
   <div id="world"></div>
 
   <script src="scrub-engine.js"></script>
@@ -141,7 +220,7 @@
       sections: [
         {
           id: 'arrival', label: 'Intro',
-          still: 'assets/arrival.png',
+          still: 'assets/arrival.jpg',
           clip: 'assets/vid/arrival.mp4',
           accent: '#21E6C1',
           scroll: 1.6, linger: 0.4,
@@ -151,7 +230,7 @@
         },
         {
           id: 'custom', label: 'Su misura',
-          still: 'assets/custom.png',
+          still: 'assets/custom.jpg',
           clip: 'assets/vid/custom.mp4',
           accent: '#FFB627',
           scroll: 1.4, linger: 0.35,
@@ -161,7 +240,7 @@
         },
         {
           id: 'web', label: 'Siti web',
-          still: 'assets/web.png',
+          still: 'assets/web.jpg',
           clip: 'assets/vid/web.mp4',
           accent: '#7B2FF7',
           scroll: 1.4, linger: 0.35,
@@ -171,7 +250,7 @@
         },
         {
           id: 'ai', label: 'AI',
-          still: 'assets/ai.png',
+          still: 'assets/ai.jpg',
           clip: 'assets/vid/ai.mp4',
           accent: '#FF2E97',
           scroll: 1.5, linger: 0.4,
@@ -181,7 +260,7 @@
         },
         {
           id: 'deck', label: 'Contatti',
-          still: 'assets/deck.png',
+          still: 'assets/deck.jpg',
           clip: 'assets/vid/deck.mp4',
           accent: '#21E6C1',
           scroll: 1.8, linger: 0.5,
@@ -194,6 +273,12 @@
       // Architecture A: no connector clips. The legs are the whole journey.
       connectors: [],
     });
+
+    // Il motore è montato: il fallback statico ha fatto il suo lavoro (farsi leggere
+    // dai crawler) e ora va tolto, altrimenti resterebbe sotto la scena — il motore
+    // fa appendChild sul contenitore, non lo svuota. Rimosso solo ora e non prima,
+    // così se mountScrollWorld esplode l'utente vede comunque testo e contatti.
+    document.getElementById('seo-fallback')?.remove();
 
     // Contact links for the closing section. The engine escapes all config text,
     // so icon markup can't go through `sections[]` — it's appended after mount
